@@ -149,4 +149,49 @@ Trong đó:
 ## Task 5: Headers
 
 - **_Header_** đề cập đến dữ liệu bổ sung được đặt ở đầu khối dữ liệu đang được lưu trữ hoặc truyền đi. Trong truyền dữ liệu, dữ liệu theo sau tiêu đề đôi khi được gọi là tải trọng hoặc nội dung.
-- 
+- Mặc dù không có tiêu đề nào được yêu cầu nghiêm ngặt khi thực hiện HTTP Request, nhưng bạn sẽ thấy khó khăn khi xem trang web chính xác.
+
+### Common Request Headers
+
+Đây là những tiêu đề được gửi từ máy khách (thường là trình duyệt của bạn) đến máy chủ.
+- **_Host_**: Một số máy chủ web lưu trữ nhiều trang web, do đó, bằng cách cung cấp tiêu đề máy chủ, bạn có thể cho máy chủ biết bạn yêu cầu trang nào, nếu không, bạn sẽ chỉ nhận được trang web mặc định cho máy chủ.
+- **_User-Agent_**: Đây là số phiên bản và phần mềm trình duyệt của bạn, cho máy chủ web biết phần mềm trình duyệt của bạn giúp nó định dạng trang web phù hợp với trình duyệt của bạn và đồng thời một số phần tử HTML, JavaScript và CSS chỉ khả dụng trong một số trình duyệt nhất định.
+- **_Content-Length_**: Khi gửi dữ liệu đến một máy chủ web, chẳng hạn như trong một biểu mẫu, độ dài nội dung sẽ cho máy chủ web biết lượng dữ liệu mong đợi trong yêu cầu web. Bằng cách này, máy chủ có thể đảm bảo không thiếu bất kỳ dữ liệu nào.
+- **_Accept-Encoding_**: Cho máy chủ web biết loại phương pháp nén mà trình duyệt hỗ trợ để dữ liệu có thể được làm nhỏ hơn để truyền qua internet.
+- **_Cookie_**: Dữ liệu được gửi đến máy chủ để giúp ghi nhớ thông tin của bạn (xem tác vụ cookie để biết thêm thông tin).
+
+
+### Common Response Headers
+
+Đây là những tiêu đề được trả lại cho máy khách từ máy chủ sau một yêu cầu.
+- **_Set-Cookie_**: Thông tin cần lưu trữ sẽ được gửi trở lại máy chủ web theo từng yêu cầu (xem tác vụ cookie để biết thêm thông tin).
+- **_Cache-Control_**: Khoảng thời gian lưu trữ nội dung của phản hồi trong bộ đệm của trình duyệt trước khi nó yêu cầu lại.
+- **_Content-Type_**: Điều này cho khách hàng biết loại dữ liệu nào đang được trả về, như là HTML, CSS, JavaScript, Hình ảnh, PDF, Video, v.v. Sử dụng tiêu đề loại nội dung, trình duyệt sẽ biết cách xử lý dữ liệu.
+- **_Content-Encoding_**: Phương pháp nào đã được sử dụng để nén dữ liệu để làm cho nó nhỏ hơn khi gửi nó qua internet.
+
+1. What header tells the web server what browser is being used?: `User-Agent`
+2. What header tells the browser what type of data is being returned?: `Content-Type`
+3. What header tells the web server which website is being requested?: `Host`
+
+
+## Task 6: Cookies
+
+- Có thể bạn đã từng nghe nói về cookie, chúng chỉ là một phần dữ liệu nhỏ được lưu trữ trên máy tính của bạn. Cookie được lưu khi bạn nhận được tiêu đề "Set-Cookies" từ máy chủ web. Sau đó, mọi yêu cầu tiếp theo mà bạn thực hiện, bạn sẽ gửi dữ liệu cookie trở lại máy chủ web. Vì HTTP không lưu trữ trạng thái của yêu cầu trước đó, cookie có thể được sử dụng để nhắc máy chủ web biết bạn là ai, một số cài đặt cá nhân cho trang web hoặc liệu bạn đã từng truy cập trang web đó chưa. Hãy xem đây là một yêu cầu HTTP ví dụ:
+
+![](https://static-labs.tryhackme.cloud/sites/howhttpworks/cookie_flow.png)
+
+- **_Cookies_** có thể được sử dụng cho nhiều mục đích nhưng thường được sử dụng nhất để xác thực trang web. Giá trị cookie thường không phải là một chuỗi văn bản rõ ràng để bạn có thể xem mật khẩu mà là một mã thông báo (mã bí mật duy nhất mà con người không dễ đoán được).
+- Bạn có thể dễ dàng xem cookie nào mà trình duyệt của bạn đang gửi đến một trang web bằng cách sử dụng `developer tools` trong trình duyệt của bạn.
+- Khi bạn đã mở `developer tools`, hãy nhấp vào tab "Network". Tab này sẽ hiển thị cho bạn danh sách tất cả các tài nguyên mà trình duyệt của bạn đã yêu cầu. Bạn có thể nhấp vào từng cái để nhận bảng phân tích chi tiết về yêu cầu và phản hồi. Nếu trình duyệt của bạn đã gửi cookie, bạn sẽ thấy những cookie này trên tab "Cookie" của yêu cầu.
+
+1. Which header is used to save cookies to your computer?: `Set-Cookies`
+
+
+## Task 7: Making Requests
+
+1. Make a GET request to /room: `THM{YOU'RE_IN_THE_ROOM}`
+2. Make a GET request to /blog and using the gear icon set the id parameter to 1 in the URL field: `THM{YOU_FOUND_THE_BLOG}`
+3. Make a DELETE request to /user/1: `THM{USER_IS_DELETED}`
+4. Make a PUT request to /user/2 with the username parameter set to admin: `THM{USER_HAS_UPDATED}`
+5. POST the username of thm and a password of letmein to /login: `THM{HTTP_REQUEST_MASTER}`
+
