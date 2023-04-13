@@ -46,7 +46,7 @@
 
 6. Where has he gone on holiday?: `New York`.
 
-- Câu cuối do không biết làm nên em đã xem solve trên mạng và biết sẽ tìm pasword được ẩn ở trong wordpress. Nó đã giấu password đi bằng cách thêm color `0xffffff` (màu trắng)  vào trong đoạn `<p>` chứa password.
+- Câu cuối do không biết làm nên em đã xem solve trên mạng và biết sẽ tìm password được ẩn ở trong wordpress. Nó đã giấu password đi bằng cách thêm color `0xffffff` (màu trắng)  vào trong đoạn `<p>` chứa password.
 
 ![](https://github.com/vinhxinh/tryhackme/blob/main/Ohsint/pic6_task1.png?raw=true)
 
