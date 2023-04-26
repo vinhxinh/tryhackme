@@ -48,15 +48,15 @@ Command sẽ có dạng như sau:
 
 - "HTTPServer" của Python3 sẽ phục vụ các tệp trong thư mục mà bạn chạy lệnh, nhưng điều này có thể được thay đổi bằng cách cung cấp các tùy chọn có thể tìm thấy trong các trang hướng dẫn. Đơn giản, tất cả những gì chúng ta cần làm là chạy `python3 -m  http.server` để khởi động mô-đun.
 
-![]()
+![](https://github.com/vinhxinh/tryhackme/blob/main/Linux_Fundamental/pic1_task3.png?raw=true)
 
 - Ta có thể sử dụng `wget` để tải xuống file bằng địa chỉ IP của máy tính và tên của file. Tuy nhiên với cách này bạn cần phải biết chính xác tên và đường dẫn chính xác của file để sử dụng. Thay vì điều đó ta có thể sử dụng [Updog](https://github.com/sc0tfree/updog) để thay thế những nhược điểm trên.
 
-![]()
+![](https://github.com/vinhxinh/tryhackme/blob/main/Linux_Fundamental/pic2_task3.png?raw=true)
 
 - Trong ví dụ trên ta có thể thấy được `wget` đã tải thành công một tệp file từ server về máy tính. Yêu cầu này được `SimpleHTTPServer` ghi lại.
 
-![]()
+![](https://github.com/vinhxinh/tryhackme/blob/main/Linux_Fundamental/pic3_task3.png?raw=true)
 
 1. Download the file http://10.10.144.234:8000/.flag.txt onto the TryHackMe AttackBox. What are the contents?: `THM{WGET_WEBSERVER}`.
 
@@ -163,7 +163,7 @@ Một số tool giúp bạn viết cron jobs một cách dễ dàng
 
 ![](https://assets.tryhackme.com/additional/linux-fundamentals/part3/cron3.png)
 
-![]()
+![](https://github.com/vinhxinh/tryhackme/blob/main/Linux_Fundamental/pic4_task6.png?raw=true)
 
 
 1. When will the crontab on the deployed instance (10.10.208.44) run?: `@reboot`.
