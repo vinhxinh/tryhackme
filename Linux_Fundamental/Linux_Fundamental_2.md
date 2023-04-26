@@ -55,7 +55,7 @@ Một số command để thao tác với file system:
 
 - Khi ta sử dụng lệnh `ls -l` hoặc `ll` ta sẽ thấy được một bảng đầy đủ trong đó có:
  
- ![](https://github.com/vinhxinh/tryhackme/blob/main/Linux_Fundamental/pic1_part2.png?raw=true)
+ ![]()
 
 Trong đó ta cần quan tâm đến:
 - Phần `-` đầu tiên nếu nó là dấu `-` thì có nghĩa nó là file còn nếu là `d` thì nó là đường dẫn (folder).
