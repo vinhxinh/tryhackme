@@ -66,9 +66,76 @@ How would you activate this setting?: `-a`.
 
 ## Task 5: (Scan Types) TCP Connect Scans
 
+- `TCP` scans: `-sT`.
 
+- `TCP` scan port theo cơ chế `TCP` three-way handshake.
 
+![](https://muirlandoracle.co.uk/wp-content/uploads/2020/03/image-2.png)
 
+Với phương thức kết nối này, Nmap sẽ gửi yêu cầu tạo kết nối `SYN`. Nếu cổng đó được mở nó sẽ gửi lại tín hiệu `SYN/ACK` còn nếu cổng đó đóng nó sẽ gửi lại tín hiệu `RST` (Reset).
 
+> Tuy nhiên còn một trường hợp chúng ta phải lưu ý đó là nếu một cổng được mở tuy nhiên nó được bảo vệ bảo FireWall. Tức nếu ta gửi yêu cầu `SYN` đến cổng đó thì yêu cầu sẽ bị `Drop` và không nhận được tín hiệu phản hồi gì.
 
+- Ta có thể cấu hình tường lửa để gửi phản hồi với `RST` bằng cách sử dụng `IPtables` trong `Linux`. Điều này làm đối tượng tấn công khó xác định được cổng mục tiêu.
 
+> iptables -I INPUT -p tcp --dport <port> -j REJECT --reject-with tcp-reset
+
+1. Which RFC defines the appropriate behaviour for the TCP protocol?: `RFC 793`.
+2. If a port is closed, which flag should the server send back to indicate this?: `RST`.
+
+## Task 6: SYN Scans
+
+- `SYN` scan: `-sS`.
+
+`SYN` scan sẽ quét một hoặc nhiều cổng có thể kết nối của mục tiêu. Tuy nhiên, so với `TCP` scan thì nó khác nhau về cách hoạt động. Thay vì thực hiện full Three-way handshake giống như `TCP` thì `SYN` sẽ chỉ gửi đi một yêu cầu `SYN`, sau khi được chấp nhận và được phía mục tiêu gửi lại tín hiệu `SYN/ACK` thì nó sẽ gửi lại 1 `RST` request chứ không phải `ACK` giống như Three-way handshake.
+
+![](https://i.imgur.com/cPzF0kU.png)
+
+![](https://i.imgur.com/bcgeZmI.png)
+
+Một số ưu điểm của `SYN` scans:
+
+- Nó dễ dàng cho hacker bypass được những hệ thống IDS(Intrusion Dectection System) cũ.
+- Quá trình quét SYN thường không được ghi lại bởi các ứng dụng đang nghe trên các cổng mở, vì thông lệ tiêu chuẩn là ghi lại kết nối sau khi kết nối được thiết lập đầy đủ.
+- Thay vì hoàn thành kết nối và sau đó phải ngắt kết nối như `TCP` scans thì `SYN` scans nhanh hơn đáng kể.
+
+Một vài nhược điểm của `SYN` scans:
+
+- Nó yêu cầu `sudo` permission để thực hiện chính xác trên `Linux`. Bởi vì nó yêu cầu khả năng tạo `raw packet` điều mà chỉ có đặc quyền của `root` user làm được.
+- Đôi khi `SYN` scans có thể làm sập một dịch vụ không ổn định.
+
+Nó chỉ khác với `TCP` scans ở việc thực hiện các cổng mở còn các cổng đóng hoặc các yêu cầu bị `drop` bởi tường lửa thì đều giống `TCP` scans.
+
+1. There are two other names for a SYN scan, what are they?: `Half-open,stealth` (mở một nửa/ tàng hình).
+2. Can Nmap use a SYN scan without Sudo permissions (Y/N)?: `N`.
+
+## Task 7: UDP Scans
+
+- Khác với `TCP`, `UDP` là một kết nối "**_không trạng thái_**". 
+- Nó sẽ gửi tín hiệu đến mục tiêu và mong nhận lại được phản hồi. Có 2 trường hợp sẽ xảy ra.
+  - Nếu packet được gửi đến `UDP` port, thông thường sẽ không có tín hiệu phản hồi. Từ đó `Nmap` sẽ nhận định đó là một cổng `open|filtered`. Nó sẽ tiếp tục gửi yêu cầu lần thứ 2 nếu chưa nhận được phản hồi, nếu vẫn tiếp tục không có phản hồi thì kết quả trả về là `open|filtered`. Nếu nhận lại được `UDP` response thì cổng đó chắc chắn `open`.
+  - Nếu gửi tín hiệu đến một cổng `UDP` đón, mục tiêu sẽ trả về phản hồi `ICMP` (ping).
+
+`UDP` scan có tốt độ chậm hơn hẳn so với `TCP` scan bởi vì `UDP` khó xác định một cổng bất kì có mở hay không. Vì vậy thông thường ta sẽ chạy `Nmap` với 20 cổng `UDP` thông dụng nhất:
+
+> nmap -sU --top-ports 20 <`target`>
+
+1. If a UDP port doesn't respond to an Nmap scan, what will it be marked as?: `open|filtered`.
+2. When a UDP port is closed, by convention the target should send back a "port unreachable" message. Which protocol would it use to do so?: `ICMP`.
+
+## Task 8: NULL, FIN and Xmas
+
+- `NULL`, `FIN` và `Xmas` không phổ biến giống như các loại scan còn lại.
+
+Nó có cơ chế gần giống như `SYN` scans.
+
+- `NULL` scans (-sN) khi gửi request sẽ gửi cùng `NULL` flags. Nó sẽ nhận được tín hiệu `RST` (reset) nếu như cổng đó đóng. 
+
+![](https://i.imgur.com/ABCxAwf.png)
+
+- `FIN` scans (-sF) khi gửi request sẽ gửi cùng `FIN` flags. Nó sẽ nhận được tín hiệu `RST` (reset) nếu như cổng đó đóng.
+
+![](https://i.imgur.com/gIzKbEk.png)
+
+- `Xmas` scans (-sX) khi gửi request sẽ gửi kèm một flag khá kì dị. Nó sẽ nhận được tín hiệu `RST` nếu như cổng đó đóng.
+  - Nó được gọi là quét "**_Giáng sinh"_** vì các cờ mà nó đặt (PSH, URG và FIN) khiến nó trông giống cây thông Noel nhấp nháy khi được xem dưới dạng chụp gói trong Wireshark.
