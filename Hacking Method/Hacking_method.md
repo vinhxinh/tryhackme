@@ -101,7 +101,7 @@ Viết báo cáo là bước cuối cùng của quá trình pentest
 
 Một bản báo cáo bình thường sẽ có dạng: 
 
-![]()
+![](https://github.com/vinhxinh/tryhackme/blob/main/Hacking%20Method/pic1.png?raw=true)
 
 1. What would be the type of reporting that involves a full documentation of all findings within a formal document?: `Full formal report`.
 2. What is the other thing that a pentester should provide in a report beyond: the finding name, the finding description, the finding criticality: `Remediation Recommendation`.
