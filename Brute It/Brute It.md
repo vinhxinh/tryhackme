@@ -13,11 +13,11 @@ Sau khi deploy machine từ Tryhackme, mình có được một địa chỉ IP.
 Giải thích thêm về đoạn script trên: `sudo nmap -sV $ip`.
 - Đầu tiên mình sử dụng thêm quyền của user `root` với mục đích như sau:
 
-![](pic1)
+![](https://github.com/vinhxinh/tryhackme/blob/main/Brute%20It/pic1.png?raw=true)
 
 - Tiếp theo sử dụng scan option `-sV` để có thêm thông tin về cổng được mở, dịch vụ và phiên bản được sử dụng của nó.
 
-![](pic2)
+![](https://github.com/vinhxinh/tryhackme/blob/main/Brute%20It/pic2.png?raw=true)
 
 1. How many ports are open?: `2`.
 2. What version of SSH is running?: `OpenSSH 7.6p1`.
@@ -28,17 +28,17 @@ Giải thích thêm về đoạn script trên: `sudo nmap -sV $ip`.
 
 Trong đó 2 tham số truyền vào sẽ là `-w` tương ứng với wordlist để brute và `dir -u` tương ứng với đường dẫn trang web.
 
-![](pic3)
+![](https://github.com/vinhxinh/tryhackme/blob/main/Brute%20It/pic3.png?raw=true)
 
 5. What is the hidden directory?: `/admin`.
 
 ## Task 3: Getting a shell
 
-![](pic4)
+![](https://github.com/vinhxinh/tryhackme/blob/main/Brute%20It/pic4.png?raw=true)
 
 Sau khi mình truy cập vào đường dẫn ẩn `/admin` thì sẽ có một trang web đăng nhập hiện ra. Chưa có thông tin gì về thông tin đăng nhập nên mình thử `Inspect` để tìm một vài thông tin. Dev đã để quên credential trên chính code HTML của mình nên mình có thể biết tài khoản đăng nhập là `admin` còn mật khẩu là gì thì mình chưa rõ. 
 
-![](pic5)
+![](https://github.com/vinhxinh/tryhackme/blob/main/Brute%20It/pic5.png?raw=true)
 
 Ở đây mình có thể sử dụng `Burp Suite` hoặc `Hydra` tuy nhiên mình sẽ sử dụng `Hydra` vì đang có sẵn máy ảo. Script mình dùng là: `hydra -l admin -P $dir_to_wordlist $ip http-form-post "/admin/:user=^USER^&pass=^PASS^:Username or password invalid"`.
 
@@ -49,7 +49,7 @@ Giải thích rõ về đoạn script trên:
 - `http-form-post` thể hiện phương thức `POST` sẽ được sử dụng để gửi request đến server.
 - Trong ngoặc "" mình sẽ phải truyền vào 3 tham số đó là `/admin/` cho biết đến đường dẫn ẩn của trang web. Phân cách bởi dấu `:`. Tiếp theo là `user=^USER^&pass=^PASS^` để chương trình hiểu nó sẽ sử dụng user là admin của biến trước đó và pass là phần dẫn đến file brute force. Cuối cùng là `Username or password invalid` thể hiện thông báo của web khi chưa đăng nhập thành công để chương trình tự hiểu chuyển sang trường hợp khác.
 
-![](pic6)
+![](https://github.com/vinhxinh/tryhackme/blob/main/Brute%20It/pic6.png?raw=true)
 
 Ta đã tìm được mật khẩu là `xavier`.
 
@@ -63,11 +63,11 @@ Giải thích cho đoạn command trên:
 
 Tiếp theo mình sẽ sử dụng `john` với đoạn script như sau: `sudo john --wordlist=$dir_to_wordlist --format=ssh sshhash` trong đó `--format` để xác định loại key ban đầu.
 
-![](pic7)
+![](https://github.com/vinhxinh/tryhackme/blob/main/Brute%20It/pic7.png?raw=true)
 
 Sau khi đã tìm ra passphares của `id_rsa` là `rockinroll` mình tiến hành ssh lên server của John bằng chính file identify là file `id_rsa` ban đầu. Command mình dùng là: `ssh -i id_rsa john@$ip`. Trong đó -i chính là option truyền vào file identify để ssh lên server.
 
-![](pic8)
+![](https://github.com/vinhxinh/tryhackme/blob/main/Brute%20It/pic8.png?raw=true)
 
 Sau khi đã vào được server mình dễ dàng cat file `user.txt` để lấy được flag cần tìm.
 
@@ -80,11 +80,11 @@ Sau khi đã vào được server mình dễ dàng cat file `user.txt` để l�
 
 Đến bước leo thang đặc quyền việc đầu tiên mình nghĩ đến là kiểm tra các linux command nào được chạy dưới quyền root mà không cần password. Mình sẽ sử dụng lệnh: `sudo -l`. Kiểm tra mình thấy có sử dụng được lệnh `cat`. Mình sẽ sử dụng `cat` để đọc nội dung của file `passwd` hoặc `shadow`.
 
-![](pic9)
+![](https://github.com/vinhxinh/tryhackme/blob/main/Brute%20It/pic9.png?raw=true)
 
 Sau khi cat được file `shadow` mình có password đã được mã hóa của `root`. Làm như phần giải mã id_rsa bằng `john` mình thu được kết quả mật khẩu `root` là: `football`. Mình sẽ truy cập vào tài khoản root và làm nốt mấy task còn lại.
 
-![](pic10)
+![](https://github.com/vinhxinh/tryhackme/blob/main/Brute%20It/pic10.png?raw=true)
 
 1. What is the root's password?: `football`.
 2. root.txt: `THM{pr1v1l3g3_3sc4l4t10n}`.
